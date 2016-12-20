@@ -230,6 +230,15 @@
 
 .container-cards-pf {
   margin-top: (@grid-gutter-width / 2);
+  overflow-y: auto;
+}
+
+.navbar-pf-vertical ~ .container-cards-pf {
+  height: calc(100vh - @navbar-pf-height - (@grid-gutter-width / 2));
+}
+
+.navbar-default ~ .container-cards-pf {
+  height: calc(100vh - 72px - (@grid-gutter-width / 2));
 }
 
 .row-cards-pf {
