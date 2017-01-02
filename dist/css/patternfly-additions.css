@@ -2548,9 +2548,13 @@ fieldset[disabled] .combobox-container .input-group-addon.active {
 }
 .container-cards-pf {
   margin-top: 20px;
-  padding-top: 60px;
-  height: calc(100vh - 60px - 20px);
   overflow-y: auto;
+}
+.navbar-pf-vertical ~ .container-cards-pf {
+  height: calc(100vh - 60px - (40px / 2));
+}
+.navbar-default ~ .container-cards-pf {
+  height: calc(100vh - 72px - (40px / 2));
 }
 .row-cards-pf {
   margin-left: -10px;
