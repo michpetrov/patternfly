@@ -1,12 +1,15 @@
 {% include widgets/layouts/navbar-primary.html %}
-{% include widgets/layouts/toolbar.html %}
+{% include widgets/layouts/card-toolbar.html %}
 <div class="container-fluid container-cards-pf" id="card-container">
   <div class="row row-cards-pf">
     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
 {% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
     </div>
     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-multi-select" %}
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-multi-select" %}
     </div>
     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
 {% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
@@ -15,7 +18,25 @@
 {% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
     </div>
     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-multi-select" %}
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
 {% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-multi-select" %}
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-multi-select" %}
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-multi-select" %}
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-multi-select" %}
     </div>
     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
 {% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
@@ -24,31 +45,10 @@
 {% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
     </div>
     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-multi-select" %}
     </div>
     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
-    </div>
-    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
-    </div>
-    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
-    </div>
-    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
-    </div>
-    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
-    </div>
-    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
-    </div>
-    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
-    </div>
-    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-multi-select" %}
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-multi-select" %}
     </div>
   </div>
 </div>
@@ -65,6 +65,38 @@
       else
       { $(this).parent().parent().addClass('active'); }
     });
+
+    var cards = {
+      ctx: {
+        opts: {
+          filterCols: [
+            null,
+            {
+              default: true,
+              optionSelector: "#filter1",
+              placeholder: "Filter By Name..."
+            }, {
+              optionSelector: "#filter2",
+              placeholder: "Filter By Type..."
+            }, {
+              optionSelector: "#filter3",
+              placeholder: "Filter By Color..."
+            }
+          ],
+          toolbarSelector: "#toolbar1"
+        }
+      },
+     opts: {
+       rowSelector: ".row-cards-pf div:has(.card-pf-view-select.card-pf-view-multi-select)",
+       columnSelectors: [
+         null,
+         ".card-pf-title"
+       ]
+     }
+    };
+
+    Pfly.pfFilter.init(cards);
+
     // allow users to select multiple cards with shift key
     $('#card-container').on('click', '.card-pf-view-checkbox>input', function(event) {
       var $cardsContainer = $('.container-cards-pf');
