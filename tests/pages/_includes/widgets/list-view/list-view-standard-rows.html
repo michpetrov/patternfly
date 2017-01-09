@@ -269,6 +269,38 @@
       var space = $(window).height() - $dropdown[0].getBoundingClientRect().top - $this.find('.dropdown-menu').outerHeight(true);
       $dropdown.toggleClass('dropup', space < 10);
     });
+
+    var cards = {
+      ctx: {
+        opts: {
+          filterCols: [
+            null,
+            {
+              default: true,
+              optionSelector: "#filter1",
+              placeholder: "Filter By Name..."
+            }, {
+              optionSelector: "#filter2",
+              placeholder: "Filter By Type..."
+            }, {
+              optionSelector: "#filter3",
+              placeholder: "Filter By Color..."
+            }
+          ],
+          toolbarSelector: "#toolbar1"
+        }
+      },
+     opts: {
+       rowSelector: ".list-view-pf-view .list-group-item",
+       columnSelectors: [
+         null,
+         ".list-group-item-heading"
+       ]
+     }
+    };
+
+    Pfly.pfFilter.init(cards);
+
     // allow users to select multiple list items with shift key
     $('.list-group').on('click', '.list-view-pf-checkbox>input', function(event) {
       var $list = $('.list-group');
