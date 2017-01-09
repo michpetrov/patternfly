@@ -1,21 +1,21 @@
 {% include widgets/layouts/navbar-primary.html %}
-{% include widgets/layouts/toolbar.html %}
+{% include widgets/layouts/card-toolbar.html %}
 <div class="container-fluid container-cards-pf">
   <div class="row row-cards-pf">
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
 {% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-single-select" %}
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-single-select" %}
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-single-select" %}
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-single-select" %}
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
 {% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-single-select" %}
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-single-select" %}
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-{% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-single-select" %}
+{% include widgets/cards/object-status1.html class1="card-pf-view-select card-pf-view-single-select" %}
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
 {% include widgets/cards/object-status.html class1="card-pf-view-select card-pf-view-single-select" %}
@@ -35,5 +35,36 @@
       else
       { $('.card-pf-view-single-select').removeClass('active'); $(this).addClass('active'); }
     });
+
+    var cards = {
+      ctx: {
+        opts: {
+          filterCols: [
+            null,
+            {
+              default: true,
+              optionSelector: "#filter1",
+              placeholder: "Filter By Name..."
+            }, {
+              optionSelector: "#filter2",
+              placeholder: "Filter By Type..."
+            }, {
+              optionSelector: "#filter3",
+              placeholder: "Filter By Color..."
+            }
+          ],
+          toolbarSelector: "#toolbar1"
+        }
+      },
+     opts: {
+       rowSelector: ".row-cards-pf div:has(.card-pf-view-select.card-pf-view-single-select)",
+       columnSelectors: [
+         null,
+         ".card-pf-title"
+       ]
+     }
+    };
+
+    Pfly.pfFilter.init(cards);
   });
 </script>
