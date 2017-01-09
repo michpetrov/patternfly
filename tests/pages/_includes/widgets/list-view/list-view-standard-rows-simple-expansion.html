@@ -509,5 +509,36 @@
           .find(".fa-angle-right").removeClass("fa-angle-down");
     })
 
+    var cards = {
+      ctx: {
+        opts: {
+          filterCols: [
+            null,
+            {
+              default: true,
+              optionSelector: "#filter1",
+              placeholder: "Filter By Name..."
+            }, {
+              optionSelector: "#filter2",
+              placeholder: "Filter By Type..."
+            }, {
+              optionSelector: "#filter3",
+              placeholder: "Filter By Color..."
+            }
+          ],
+          toolbarSelector: "#toolbar1"
+        }
+      },
+     opts: {
+       rowSelector: ".list-view-pf-view .list-group-item",
+       columnSelectors: [
+         null,
+         ".list-group-item-heading"
+       ]
+     }
+    };
+
+    Pfly.pfFilter.init(cards);
+
   });
 </script>
