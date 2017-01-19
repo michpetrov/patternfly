@@ -29,6 +29,7 @@
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="../../dist/js/patternfly.pfFilter.js"></script>
+    <script src="../../dist/js/patternfly.pfSort.js"></script>
     <script src="../../dist/js/patternfly.min.js"></script>
   </head>
   <div class="toast-notifications-list-pf">
@@ -155,13 +156,13 @@
             <input type="text" class="form-control" id="filter" placeholder="Filter By Name..." autocomplete="off">
           </div><!-- /input-group -->
         </div>
-        <div class="form-group">
+        <div class="form-group toolbar-pf-sort">
           <div class="dropdown btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name <span class="caret"></span></button>
             <ul class="dropdown-menu">
-              <li class="selected"><a href="#">Name</a></li>
-              <li><a href="#">Type</a></li>
-              <li><a href="#">Last Modified</a></li>
+              <li><a href="#" id="sort1">Name</a></li>
+              <li><a href="#" id="sort2">Type</a></li>
+              <li><a href="#" id="sort3">Last Modified</a></li>
             </ul>
           </div>
           <button class="btn btn-link" type="button">
@@ -592,6 +593,17 @@
               placeholder: "Filter By Color..."
             }
           ],
+          sortCols: [
+            null,
+            {
+              default: true,
+              optionSelector: "#sort1"
+            }, {
+              optionSelector: "#sort2"
+            }, {
+              optionSelector: "#sort3"
+            }
+          ],
           toolbarSelector: "#toolbar1"
         }
       },
@@ -605,6 +617,25 @@
     };
 
     Pfly.pfFilter.init(cards);
+
+    Pfly.pfSort.init(cards);
+
+    // allow users to select multiple list items with shift key
+    $('.list-group').on('click', '.list-view-pf-checkbox>input', function(event) {
+      var $list = $('.list-group');
+      var prevIndex = $list.data('preIndex');
+      var $listItems = $list.children('.list-group-item');
+      var $currentItem = $(this).closest('.list-group-item');
+      if(event.shiftKey && prevIndex > -1 && this.checked) {
+        var currentIndex = $listItems.index($currentItem);
+        var $selectScope = currentIndex - prevIndex > 0
+          ? $currentItem.prevAll().not($listItems.eq(prevIndex).prevAll().addBack())
+          : $listItems.eq(prevIndex).prevAll().not($currentItem.prevAll().addBack());
+        $selectScope.addClass('active').find('.list-view-pf-checkbox').children('input').prop('checked', true);
+      }
+      $list.data('preIndex', this.checked ? $listItems.index($currentItem) : -1);
+    });
+
   });
 </script>
 

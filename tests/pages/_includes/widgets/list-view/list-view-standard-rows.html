@@ -287,6 +287,17 @@
               placeholder: "Filter By Color..."
             }
           ],
+          sortCols: [
+            null,
+            {
+              default: true,
+              optionSelector: "#sort1"
+            }, {
+              optionSelector: "#sort2"
+            }, {
+              optionSelector: "#sort3"
+            }
+          ],
           toolbarSelector: "#toolbar1"
         }
       },
@@ -300,5 +311,24 @@
     };
 
     Pfly.pfFilter.init(cards);
+
+    Pfly.pfSort.init(cards);
+
+    // allow users to select multiple list items with shift key
+    $('.list-group').on('click', '.list-view-pf-checkbox>input', function(event) {
+      var $list = $('.list-group');
+      var prevIndex = $list.data('preIndex');
+      var $listItems = $list.children('.list-group-item');
+      var $currentItem = $(this).closest('.list-group-item');
+      if(event.shiftKey && prevIndex > -1 && this.checked) {
+        var currentIndex = $listItems.index($currentItem);
+        var $selectScope = currentIndex - prevIndex > 0
+          ? $currentItem.prevAll().not($listItems.eq(prevIndex).prevAll().addBack())
+          : $listItems.eq(prevIndex).prevAll().not($currentItem.prevAll().addBack());
+        $selectScope.addClass('active').find('.list-view-pf-checkbox').children('input').prop('checked', true);
+      }
+      $list.data('preIndex', this.checked ? $listItems.index($currentItem) : -1);
+    });
+
   });
 </script>

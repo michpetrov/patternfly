@@ -30,6 +30,7 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
     <script src="../../dist/js/patternfly.pfFilter.js"></script>
+    <script src="../../dist/js/patternfly.pfSort.js"></script>
     <script src="../../dist/js/patternfly.min.js"></script>
   </head>
   <div class="toast-notifications-list-pf">
@@ -167,13 +168,13 @@
             <input type="text" class="form-control" id="filter" placeholder="Filter By Name..." autocomplete="off">
           </div><!-- /input-group -->
         </div>
-        <div class="form-group">
+        <div class="form-group toolbar-pf-sort">
           <div class="dropdown btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name <span class="caret"></span></button>
             <ul class="dropdown-menu">
-              <li class="selected"><a href="#">Name</a></li>
-              <li><a href="#">Type</a></li>
-              <li><a href="#">Last Modified</a></li>
+              <li><a href="#" id="sort1">Name</a></li>
+              <li><a href="#" id="sort2">Type</a></li>
+              <li><a href="#" id="sort3">Last Modified</a></li>
             </ul>
           </div>
           <button class="btn btn-link" type="button">
@@ -242,7 +243,7 @@
   </div><!-- /row -->
 </div><!-- /container -->
 
-<div class="container-fluid container-cards-pf">
+<div class="container-fluid container-cards-pf" id="card-container">
   <div class="row row-cards-pf">
     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
 <div class="card-pf card-pf-view card-pf-view-select card-pf-view-multi-select">
@@ -686,6 +687,17 @@
               placeholder: "Filter By Color..."
             }
           ],
+          sortCols: [
+            null,
+            {
+              default: true,
+              optionSelector: "#sort1"
+            }, {
+              optionSelector: "#sort2"
+            }, {
+              optionSelector: "#sort3"
+            }
+          ],
           toolbarSelector: "#toolbar1"
         }
       },
@@ -699,6 +711,24 @@
     };
 
     Pfly.pfFilter.init(cards);
+
+    Pfly.pfSort.init(cards);
+
+    // allow users to select multiple cards with shift key
+    $('#card-container').on('click', '.card-pf-view-checkbox>input', function(event) {
+      var $cardsContainer = $('.container-cards-pf');
+      var prevIndex = $cardsContainer.data('prevIndex');
+      var $cards = $cardsContainer.find('.card-pf');
+      var $currentCard = $(this).closest('.card-pf');
+      if(event.shiftKey && prevIndex > -1 && this.checked) {
+        var currentIndex = $cards.index($currentCard);
+        var $selectScope = currentIndex - prevIndex > 0
+          ? $currentCard.parent().prevAll().not($cards.eq(prevIndex).parent().prevAll().addBack())
+          : $cards.eq(prevIndex).parent().prevAll().not($currentCard.parent().prevAll().addBack());
+        $selectScope.children().addClass('active').find('.card-pf-view-checkbox').children('input').prop('checked', true);
+      }
+      $cardsContainer.data('prevIndex', this.checked ? $cards.index($currentCard) : -1);
+    });
   });
 </script>
 
