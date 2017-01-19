@@ -526,6 +526,17 @@
               placeholder: "Filter By Color..."
             }
           ],
+          sortCols: [
+            null,
+            {
+              default: true,
+              optionSelector: "#sort1"
+            }, {
+              optionSelector: "#sort2"
+            }, {
+              optionSelector: "#sort3"
+            }
+          ],
           toolbarSelector: "#toolbar1"
         }
       },
@@ -539,6 +550,8 @@
     };
 
     Pfly.pfFilter.init(cards);
+
+    Pfly.pfSort.init(cards);
 
   });
 </script>
