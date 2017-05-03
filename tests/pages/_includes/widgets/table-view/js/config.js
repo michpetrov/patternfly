@@ -47,6 +47,7 @@ $("#{{include.tableId}}").DataTable({
   order: [[ 1, 'asc' ]],
   pfConfig: {
     emptyStateSelector: "#{{include.emptyStateId}}",
+    filterCaseInsensitive: true,
     filterCols: [
       null,
       {
@@ -67,8 +68,10 @@ $("#{{include.tableId}}").DataTable({
         placeholder: "Filter By CSS Grade..."
       }
     ],
+    paginationSelector: "#{{include.paginationId}}",
     toolbarSelector: "#{{include.toolbarId}}",
-    selectAllSelector: 'th:first-child input[type="checkbox"]'
+    selectAllSelector: 'th:first-child input[type="checkbox"]',
+    colvisMenuSelector: '.table-view-pf-colvis-menu'
   },
   select: {
     selector: 'td:first-child input[type="checkbox"]',
