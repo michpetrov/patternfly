@@ -6,7 +6,7 @@ resource: true
 listview: true
 full-page: true
 title: Pagination - List View
-url-js-extra: [ '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js']
+url-js-extra: [ '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js','../../dist/js/patternfly.pfPagination.js']
 
 ---
 {% include widgets/layouts/navbar-primary.html %}
@@ -434,7 +434,7 @@ url-js-extra: [ '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/boo
       </div>
     </div>
   </div>
-  {% include widgets/pagination/pagination.html class1="list-view-pf-pagination" pagesize=10 %}
+  {% include widgets/pagination/pagination.html class1="list-view-pf-pagination" pagesize=10 id="pagination1" %}
 </div>
 <script>
   $(document).ready(function () {
@@ -454,6 +454,49 @@ url-js-extra: [ '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/boo
       $dropdown.toggleClass('dropup', space < 10);
     });
   });
+
+  var rows = {
+    ctx: {
+      opts: {
+        pageSize: 10,
+        paginationSelector: "#pagination1",
+        pageRowSelector: ".list-group-item"
+      }
+    },
+    pageInfo: {
+      //end:15
+      length:10,
+      page:0,
+      //pages:4,
+      //recordsDisplay:57,
+      recordsTotal:10
+      //serverSide:false
+      //start:0
+    },
+    updatePageLength: function(length) {
+      this.pageInfo.length = length;
+      this.pageInfo.pages = Math.ceil(this.pageInfo.recordsTotal / length);
+      this.updatePage(this.pageInfo.page);
+    },
+    updatePage: function(page) {
+      this.pageInfo.page = page;
+      this.pageInfo.start = this.pageInfo.page * this.pageInfo.length;
+      this.pageInfo.end = Math.min(this.pageInfo.start + this.pageInfo.length,this.pageInfo.recordsTotal);
+    },
+    updateRecordTotal: function() {
+      this.pageInfo.recordsTotal = $(this.ctx.opts.pageRowSelector).length;
+      this.pageInfo.recordsDisplay =  this.pageInfo.recordsTotal;
+    },
+    displayPage: function() {
+      var pageRows = $(this.ctx.opts.pageRowSelector);
+      pageRows.hide();
+      for(let i = this.pageInfo.start; i < this.pageInfo.end; i++) {
+        $(pageRows.get(i)).show();
+      }
+    }
+  };
+
+  Pfly.pfPagination.init(rows);
 </script>
 
 </div>
