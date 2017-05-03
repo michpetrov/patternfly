@@ -29,6 +29,7 @@
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+    <script src="../../dist/js/patternfly.pfPagination.js"></script>
     <script src="./../../dist/js/patternfly.min.js"></script>
   </head>
   <div class="toast-notifications-list-pf">
@@ -1196,7 +1197,7 @@
       </div>
     </div>
   </div>
-  <form class="content-view-pf-pagination list-view-pf-pagination clearfix" id="">
+  <form class="content-view-pf-pagination list-view-pf-pagination clearfix" id="pagination1">
   <div class="form-group">
     <select class="selectpicker pagination-pf-pagesize">
       <option value="6">6</option>
@@ -1213,8 +1214,8 @@
       <li class="disabled"><a href="#" title="First Page"><span class="i fa fa-angle-double-left"></span></a></li>
       <li class="disabled"><a href="#" title="Previous Page"><span class="i fa fa-angle-left"></span></a></li>
     </ul>
-    <label for="-page" class="sr-only">Current Page</label>
-    <input class="pagination-pf-page" type="text" value="1" id="-page"/>
+    <label for="pagination1-page" class="sr-only">Current Page</label>
+    <input class="pagination-pf-page" type="text" value="1" id="pagination1-page"/>
     <span>of <span class="pagination-pf-pages">5</span></span>
     <ul class="pagination pagination-pf-forward">
       <li><a href="#" title="Next Page"><span class="i fa fa-angle-right"></span></a></li>
@@ -1242,6 +1243,49 @@
       $dropdown.toggleClass('dropup', space < 10);
     });
   });
+
+  var rows = {
+    ctx: {
+      opts: {
+        pageSize: 10,
+        paginationSelector: "#pagination1",
+        pageRowSelector: ".list-group-item"
+      }
+    },
+    pageInfo: {
+      //end:15
+      length:10,
+      page:0,
+      //pages:4,
+      //recordsDisplay:57,
+      recordsTotal:10
+      //serverSide:false
+      //start:0
+    },
+    updatePageLength: function(length) {
+      this.pageInfo.length = length;
+      this.pageInfo.pages = Math.ceil(this.pageInfo.recordsTotal / length);
+      this.updatePage(this.pageInfo.page);
+    },
+    updatePage: function(page) {
+      this.pageInfo.page = page;
+      this.pageInfo.start = this.pageInfo.page * this.pageInfo.length;
+      this.pageInfo.end = Math.min(this.pageInfo.start + this.pageInfo.length,this.pageInfo.recordsTotal);
+    },
+    updateRecordTotal: function() {
+      this.pageInfo.recordsTotal = $(this.ctx.opts.pageRowSelector).length;
+      this.pageInfo.recordsDisplay =  this.pageInfo.recordsTotal;
+    },
+    displayPage: function() {
+      var pageRows = $(this.ctx.opts.pageRowSelector);
+      pageRows.hide();
+      for(let i = this.pageInfo.start; i < this.pageInfo.end; i++) {
+        $(pageRows.get(i)).show();
+      }
+    }
+  };
+
+  Pfly.pfPagination.init(rows);
 </script>
 
 </div>
